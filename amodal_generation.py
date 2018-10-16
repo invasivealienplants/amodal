@@ -53,14 +53,14 @@ base_images = []
 base_masks = []
 base_subfolders = []
 base_image_ids = []
-for root,_,mask_paths in os.walk("gtFine_trainvaltest/gtFine"):
+for root,_,mask_paths in os.walk("gtFine"):
     for mask_path in mask_paths:
         if mask_path[-9:] == "color.png":
             total_count += 1
             subfolder = root[27:]
             image_id = mask_path[:-17]
-            base_masks.append(misc.imread("gtFine_trainvaltest/gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png"))
-            base_images.append(misc.imread("leftImg8bit_trainvaltest/leftImg8bit/" + subfolder + "/" + image_id + "_leftImg8bit.png"))
+            base_masks.append(misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png"))
+            base_images.append(misc.imread("leftImg8bit/" + subfolder + "/" + image_id + "_leftImg8bit.png"))
             base_subfolders.append(subfolder)
             base_image_ids.append(image_id)
             if len(images) % 1000 == 0:
