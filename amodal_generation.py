@@ -63,7 +63,7 @@ for root,_,mask_paths in os.walk("gtFine"):
             base_images.append(misc.imread("leftImg8bit/" + subfolder + "/" + image_id + "_leftImg8bit.png"))
             base_subfolders.append(subfolder)
             base_image_ids.append(image_id)
-            if len(images) % 1000 == 0:
+            if len(base_images) % 1000 == 0:
                 print("Images passed through : " + str(len(images)))
                 base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=25)
                 
