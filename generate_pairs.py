@@ -80,12 +80,12 @@ for i in range(227):
             ground_x = np.sum(c[:,:,1])/np.sum(grid)
             if np.sum(base_mask[int(ground_y)][int(ground_x)]-np.array(road_color)) == 0:
                 new_base = np.where(grid_3d==1,image,new_base)
-                total_features += 0
+                total_features += 1
         if total_features > 0:
-            misc.imsave(str(counter) + "_" + str(total_copies) + ".png")
+            misc.imsave("base/"+ str(counter) + "_" + str(total_copies) + ".png",new_base)
             total_copies += 1
-        
-        
+       
+       
 
 
 
