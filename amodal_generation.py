@@ -6,6 +6,8 @@ import os
 import json
 import cv2
 
+f = open("base/dict_file.txt","w")
+
 def match_grid(mask,c):
     return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2])*(mask[:,:,3]==c[3]),dtype=np.float32)
 
@@ -70,8 +72,7 @@ for root,_,mask_paths in os.walk("gtFine"):
 base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=250)
 
 # save images
-f = open("dict_file.txt","a")
 for i,(base_image,base_mask,base_sub,base_id) in enumerate(zip(base_images,base_masks,base_subfolders,base_image_ids)):
     f.write(str(i)+","+base_sub+","+base_id+"\n")
-    misc.imsave(str(i)+"_image.png",base_image)
-    misc.imsave(str(i)+"_mask.png",base_mask)
+    misc.imsave("base/"+str(i)+"_image.png",base_image)
+    misc.imsave("base/"+str(i)+"_mask.png",base_mask)
