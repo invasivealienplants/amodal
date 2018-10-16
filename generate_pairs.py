@@ -41,7 +41,7 @@ for i in range(227):
                     subfolder = root[6:]
                     image_id = mask_path[:-17]
                     mask = misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
-                    paths.append(subfolder,image_id)
+                    paths.append((subfolder,image_id))
                     road = match_grid(mask,road_color)
                     match = np.where(road>base_road,-1.0,1.0)*road
                     score = np.sum(match)/np.sum(road)
