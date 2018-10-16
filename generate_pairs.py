@@ -34,14 +34,10 @@ for i in range(227):
     base_image = misc.imread("base/" + str(counter) + "_image.png")
     base_mask = misc.imread("base/" + str(counter) + "_mask.png")
     base_road = match_grid(base_mask,road_color)
-    c = 0
     for root,_,mask_paths in os.walk("gtFine"):
         if not ("/test" in root):
             for mask_path in mask_paths:
                 if mask_path[-9:] == "color.png":
-                    c += 1
-                    if c % 100 == 0:
-                        print(c)
                     subfolder = root[6:]
                     image_id = mask_path[:-17]
                     mask = misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
