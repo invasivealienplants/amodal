@@ -62,18 +62,19 @@ base_masks = []
 base_subfolders = []
 base_image_ids = []
 for root,_,mask_paths in os.walk("gtFine"):
-    for mask_path in mask_paths:
-        if mask_path[-9:] == "color.png":
-            total_count += 1
-            subfolder = root[6:]
-            image_id = mask_path[:-17]
-            base_masks.append(misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png"))
-            base_images.append(misc.imread("leftImg8bit/" + subfolder + "/" + image_id + "_leftImg8bit.png"))
-            base_subfolders.append(subfolder)
-            base_image_ids.append(image_id)
-            if len(base_images) % 1000 == 0:
-                print("Images passed through : " + str(len(base_images)))
-                base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=250)
+    if not ("/test" in root):
+        for mask_path in mask_paths:
+            if mask_path[-9:] == "color.png":
+                total_count += 1
+                subfolder = root[6:]
+                image_id = mask_path[:-17]
+                base_masks.append(misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png"))
+                base_images.append(misc.imread("leftImg8bit/" + subfolder + "/" + image_id + "_leftImg8bit.png"))
+                base_subfolders.append(subfolder)
+                base_image_ids.append(image_id)
+                if len(base_images) % 1000 == 0:
+                    print("Images passed through : " + str(len(base_images)))
+                    base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=250)
                
 base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=250)
 
