@@ -64,14 +64,14 @@ for root,_,mask_paths in os.walk("gtFine"):
             base_subfolders.append(subfolder)
             base_image_ids.append(image_id)
             if len(base_images) % 1000 == 0:
-                print("Images passed through : " + str(len(images)))
+                print("Images passed through : " + str(len(base_images)))
                 base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=25)
-                
+               
 base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=250)
 
 # save images
 f = open("dict_file.txt","a")
 for i,(base_image,base_mask,base_sub,base_id) in enumerate(zip(base_images,base_masks,base_subfolders,base_image_ids)):
-    f.write(i+","+base_sub+","+base_id+"\n")
-    misc.imsave(i+"_image.png",base_image)
-    misc.imsave(i+"_mask.png",base_mask)
+    f.write(str(i)+","+base_sub+","+base_id+"\n")
+    misc.imsave(str(i)+"_image.png",base_image)
+    misc.imsave(str(i)+"_mask.png",base_mask)
