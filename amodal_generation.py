@@ -38,8 +38,7 @@ def calculate_foreground(images,masks):
         trailgrid = match_grid(mask,trail_color)
         motorgrid = match_grid(mask,motor_color)
         licensegrid = match_grid(mask,license_color)
-        roadgrid = match_grid(mask,road_color)
-        fore_grid = np.minimum(cargrid+pergrid+bikegrid+pedgrid+petgrid+truckgrid-0*roadgrid,1.0)
+        fore_grid = np.minimum(cargrid+pergrid+bikegrid+pedgrid+petgrid+truckgrid+trailgrid+motorgrid+licensegrid,1.0)
         percent_foreground.append(np.mean(fore_grid))
     return percent_foreground
 
