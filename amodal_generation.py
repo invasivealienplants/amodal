@@ -16,7 +16,11 @@ person_color = [255,0,0,255]
 bike_color = [119,11,32,255]
 ped_color = [220,20,60,255]
 pet_color = [111,74,0,255]
-truck_color = [0,60,100,255]
+bus_color = [0,60,100,255]
+truck_color = [0,0,90,255]
+trail_color = [0,0,110,255]
+motor_color = [0,0,230,255]
+license_color = [0,0,142,255]
 road_color = [128,64,128,255]
 
 def calculate_foreground(images,masks):
