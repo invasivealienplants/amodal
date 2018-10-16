@@ -65,7 +65,7 @@ for root,_,mask_paths in os.walk("gtFine"):
             base_image_ids.append(image_id)
             if len(base_images) % 1000 == 0:
                 print("Images passed through : " + str(len(base_images)))
-                base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=25)
+                base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=250)
                
 base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=250)
 
