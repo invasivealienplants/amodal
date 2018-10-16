@@ -26,18 +26,20 @@ def match_grid(mask,c):
     return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2])*(mask[:,:,3]==c[3]),dtype=np.float32)
 
 for i in range(227):
+    a = f.next()
+    counter = a[:a.index(",")]
     match_scores = []
     paths = []
-    base_image = misc.imread("base/" + str(i) + "_image.png")
-    base_mask = misc.imread("base/" + str(i) + "_mask.png")
+    base_image = misc.imread("base/" + str(counter) + "_image.png")
+    base_mask = misc.imread("base/" + str(counter) + "_mask.png")
     base_road = match_grid(base_mask,road_color)
-    for root,_,mask_paths in os.walk("gtFine_trainvaltest/gtFine"):
+    for root,_,mask_paths in os.walk("gtFine"):
         if not ("/test" in root):
             for mask_path in mask_paths:
                 if mask_path[-9:] == "color.png":
                     subfolder = root[6:]
                     image_id = mask_path[:-17]
-                    mask = misc.imread("gtFine_trainvaltest/gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
+                    mask = misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
                     paths.append(root+"/"+mask_path)
                     road = match_grid(mask,road_color)
                     match = np.where(road>base_road,-1.0,1.0)*road
@@ -77,7 +79,7 @@ for i in range(227):
                 new_base = np.where(grid_3d==1,image,new_base)
                 total_features += 0
         if total_features > 0:
-            misc.imsave(str(i) + "_" + str(total_copies) + ".png")
+            misc.imsave(str(counter) + "_" + str(total_copies) + ".png")
             total_copies += 1
         
         
