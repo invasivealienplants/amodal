@@ -26,7 +26,7 @@ def match_grid(mask,c):
     return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2])*(mask[:,:,3]==c[3]),dtype=np.float32)
 
 for i in range(227):
-    a = f.next()
+    a = f.readline()
     counter = a[:a.index(",")]
     match_scores = []
     paths = []
