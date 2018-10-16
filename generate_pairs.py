@@ -41,7 +41,7 @@ for i in range(227):
                     subfolder = root[6:]
                     image_id = mask_path[:-17]
                     mask = misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
-                    paths.append(root+"/"+mask_path)
+                    paths.append(subfolder,image_id)
                     road = match_grid(mask,road_color)
                     match = np.where(road>base_road,-1.0,1.0)*road
                     score = np.sum(match)/np.sum(road)
@@ -50,7 +50,9 @@ for i in range(227):
     
     total_copies = 0
     for idx in order:
-        mask = misc.imread(paths[idx])
+        subfolder,image_id = paths[idx]
+        mask = misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
+        image = misc.imread("leftImg8bit/" + subfolder + "/" + image_id + "_leftImg8bit.png")
         cargrid = match_grid(mask,car_color)
         pergrid = match_grid(mask,person_color)
         bikegrid = match_grid(mask,bike_color)
