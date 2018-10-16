@@ -72,7 +72,7 @@ for i in range(227):
         new_base = np.copy(base_image)
         width = len(mask)
         height = len(mask[0])
-        coordinates = list(product(xrange(width), xrange(height)))
+        coordinates = list(product(range(width), range(height)))
         coordinates = np.reshape(coordinates,[width,height,2])
         for i in range(1,num_features+1):
             grid = np.where(labeled_array==i,1.0,0.0)
