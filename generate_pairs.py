@@ -43,7 +43,7 @@ for i in range(227):
                     mask = misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
                     paths.append((subfolder,image_id))
                     road = match_grid(mask,road_color)
-                    match = np.where(road>base_road,-1.0,1.0)*road
+                    match = np.where(road>base_road,-1.0,1.0)*road # scoring function -> only for road -> do for sidewalks as well
                     score = np.sum(match)/np.sum(road)
                     match_scores.append(score)
     order = np.argsort(match_scores)[:20]
@@ -64,7 +64,7 @@ for i in range(227):
         licensegrid = match_grid(mask,license_color)
         roadgrid = match_grid(mask,road_color)
         fore_grid = np.minimum(cargrid+pergrid+bikegrid+pedgrid+petgrid+truckgrid+trailgrid+motorgrid+licensegrid,1.0)
-        labeled_array,num_features = label(fore_grid,structure=np.ones([3,3]))
+        labeled_array,num_features = label(fore_grid,structure=np.ones([3,3])) # conn.components
         
         total_features = 0
         new_base = np.copy(base_image)
@@ -73,13 +73,13 @@ for i in range(227):
         coordinates = list(product(range(width), range(height)))
         coordinates = np.reshape(coordinates,[width,height,2])
         for i in range(1,num_features+1):
-            grid = np.where(labeled_array==i,1.0,0.0)
-            grid_3d = np.tile(np.reshape(grid,[1024,2048,1]),(1,1,3))
+            grid = np.where(labeled_array==i,1.0,0.0) # find binary grid of conn.component i
+            grid_3d = np.tile(np.reshape(grid,[1024,2048,1]),(1,1,3)) # -> create 3d grid
             c = np.reshape(grid,[len(mask),len(mask[0]),1])*coordinates
             ground_y = np.max(c[:,:,0])
             ground_x = np.sum(c[:,:,1])/np.sum(grid)
-            if np.sum(base_mask[int(ground_y)][int(ground_x)]-np.array(road_color)) == 0:
-                new_base = np.where(grid_3d==1,image,new_base)
+            if np.sum(base_mask[int(ground_y)][int(ground_x)]-np.array(road_color)) == 0: # pretty much is mask[y][x] = color? -> change this to find bounding box for connected component and check all bottom pixels
+                new_base = np.where(grid_3d==1,image,new_base) # paste component onto image
                 total_features += 1
         if total_features > 0:
             misc.imsave("base/"+ str(counter) + "_" + str(total_copies) + ".png",new_base)
