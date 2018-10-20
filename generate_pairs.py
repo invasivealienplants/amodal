@@ -92,6 +92,8 @@ for root,_,mask_paths in os.walk("gtFine"):
                     print(c)
                 if c == 50:
                     break
+    if c >= 50:
+        break
                   
 order = np.argsort(match_scores,axis=0)
 order = np.transpose(order[:20])
