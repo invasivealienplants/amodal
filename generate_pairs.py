@@ -90,13 +90,9 @@ for root,_,mask_paths in os.walk("gtFine"):
                 match_scores.append(match_scores_)
                 if c % 50 == 0:
                     print(c)
-                if c == 10:
-                    break
-    if c >= 10:
-        break
                   
 order = np.argsort(match_scores,axis=0)
-order = np.transpose(order[:10])
+order = np.transpose(order[:20])
 np.save("order.npy",order)
 
 match_file = open("amodal/match_file.txt","w")
@@ -105,79 +101,3 @@ for i,x in enumerate(order):
     for j in x:
         match_file.write(str(paths[j])+"\n")
     match_file.write("\n")
-
-
-eabrgeragergear
-                
-                
-
-
-
-for i in range(227):
-    print(i)
-    a = f.readline()
-    counter = a[:a.index(",")]
-    match_scores = []
-    paths = []
-    base_image = misc.imread("base/" + str(counter) + "_image.png")
-    base_mask = misc.imread("base/" + str(counter) + "_mask.png")
-    base_road = match_grid(base_mask,road_color)
-    base_ground = match_grid(base_mask,ground_color)
-    base_side = match_grid(base_mask,side_color)
-    base_veg = match_grid(base_mask,veg_color)
-    base_terrain = match_grid(base_mask,terrain_color)
-    for root,_,mask_paths in os.walk("gtFine"):
-        if not ("/test" in root):
-            for mask_path in mask_paths:
-                if mask_path[-9:] == "color.png":
-                    subfolder = root[6:]
-                    image_id = mask_path[:-17]
-                    mask = misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
-                    paths.append((subfolder,image_id))
-                    road = match_grid(mask,road_color)
-                    match = np.where(road>base_road,-1.0,1.0)*road # scoring function -> only for road -> do for sidewalks as well
-                    score = np.sum(match)/np.sum(road)
-                    match_scores.append(score)
-    order = np.argsort(match_scores)[:20]
-    
-    total_copies = 0
-    for idx in order:
-        subfolder,image_id = paths[idx]
-        mask = misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
-        image = misc.imread("leftImg8bit/" + subfolder + "/" + image_id + "_leftImg8bit.png")
-        cargrid = match_grid(mask,car_color)
-        pergrid = match_grid(mask,person_color)
-        bikegrid = match_grid(mask,bike_color)
-        pedgrid = match_grid(mask,ped_color)
-        petgrid = match_grid(mask,pet_color)
-        truckgrid = match_grid(mask,truck_color)
-        trailgrid = match_grid(mask,trail_color)
-        motorgrid = match_grid(mask,motor_color)
-        licensegrid = match_grid(mask,license_color)
-        roadgrid = match_grid(mask,road_color)
-        fore_grid = np.minimum(cargrid+pergrid+bikegrid+pedgrid+petgrid+truckgrid+trailgrid+motorgrid+licensegrid,1.0)
-        labeled_array,num_features = label(fore_grid,structure=np.ones([3,3])) # conn.components
-        
-        total_features = 0
-        new_base = np.copy(base_image)
-        width = len(mask)
-        height = len(mask[0])
-        coordinates = list(product(range(width), range(height)))
-        coordinates = np.reshape(coordinates,[width,height,2])
-        for i in range(1,num_features+1):
-            grid = np.where(labeled_array==i,1.0,0.0) # find binary grid of conn.component i
-            grid_3d = np.tile(np.reshape(grid,[1024,2048,1]),(1,1,3)) # -> create 3d grid
-            c = np.reshape(grid,[len(mask),len(mask[0]),1])*coordinates
-            ground_y = np.max(c[:,:,0])
-            ground_x = np.sum(c[:,:,1])/np.sum(grid)
-            if np.sum(base_mask[int(ground_y)][int(ground_x)]-np.array(road_color)) == 0: # pretty much is mask[y][x] = color? -> change this to find bounding box for connected component and check all bottom pixels
-                new_base = np.where(grid_3d==1,image,new_base) # paste component onto image
-                total_features += 1
-        if total_features > 0:
-            misc.imsave("base/"+ str(counter) + "_" + str(total_copies) + ".png",new_base)
-            total_copies += 1
-       
-       
-
-
-
