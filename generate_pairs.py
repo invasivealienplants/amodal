@@ -42,8 +42,10 @@ base_terrains = []
 for i in range(227):
     a = f.readline()
     counter = a[:a.index(",")]
-    base_images.append(misc.imread("base/" + str(counter) + "_image.png"))
-    base_masks.append(misc.imread("base/" + str(counter) + "_mask.png"))
+    base_image = misc.imread("base/" + str(counter) + "_image.png")
+    base_mask = misc.imread("base/" + str(counter) + "_mask.png")
+    base_images.append(base_image)
+    base_masks.append(base_mask)
     base_roads.append(match_grid(base_mask,road_color))
     base_grounds.append(match_grid(base_mask,ground_color))
     base_sides.append(match_grid(base_mask,side_color))
