@@ -27,7 +27,7 @@ veg_color = [107,142,35,255]
 terrain_color = [152,251,152,255]
 
 def match_grid(mask,c):
-    return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2])*(mask[:,:,3]==c[3]),dtype=np.float32)
+    return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2]),dtype=np.float32)
 
 match_scores = []
 
