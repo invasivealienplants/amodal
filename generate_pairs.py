@@ -81,7 +81,6 @@ for i in range(227):
         if not ("/test" in root):
             for mask_path in mask_paths:
                 if mask_path[-9:] == "color.png":
-                    c += 1
                     subfolder = root[6:]
                     image_id = mask_path[:-17]
                     mask = misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
