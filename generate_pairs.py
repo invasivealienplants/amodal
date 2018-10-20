@@ -70,6 +70,8 @@ for root,_,mask_paths in os.walk("gtFine"):
                 
                 match_scores_ = []
                 for i in range(227):
+                    base_image = base_images[i]
+                    base_mask = base_masks[i]
                     base_road = base_roads[i]
                     base_ground = base_grounds[i]
                     base_side = base_sides[i]
