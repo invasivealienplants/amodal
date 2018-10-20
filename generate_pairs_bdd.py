@@ -91,7 +91,7 @@ for i in range(219):
     match_scores.append(match_scores_)
     order = np.argsort(match_scores,axis=0)
     order = np.argsort(match_scores,axis=0)
-    order = order[:,20]
+    order = order[:,:20]
     np.save("order_bdd.npy",order)
     match_file.write(str(i)+"\n")
     for j in order[i]:
