@@ -88,8 +88,23 @@ for root,_,mask_paths in os.walk("gtFine"):
                     match_scores_.append(score)
                     
                 match_scores.append(match_scores_)
-                print(c)
-                
+                if c % 50 == 0:
+                    print(c)
+                if c == 50:
+                    break
+                  
+order = np.argsort(match_scores,axis=0)
+order = np.transpose(order[:20])
+np.save("order.npy",order)
+
+match_file = open("amodal/match_file.txt","w")
+for i,x in enumerate(order):
+    match_file.write(str(i)+"\n")
+    for j in x:
+        match_file.write(str(paths[i])+"\n")
+    match_file.write("\n")
+
+
 eabrgeragergear
                 
                 
