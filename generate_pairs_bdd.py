@@ -42,8 +42,13 @@ base_terrains = []
 for i in range(219):
     a = f.readline()
     counter = a[:a.index(",")]
-    base_image = misc.imread("base/" + str(counter) + "_image.png")
-    base_mask = misc.imread("base/" + str(counter) + "_mask.png")
+    im_name = a[a.index(",")+1:]
+    if "train" in im_name:
+        base_mask = misc.imread("bdd100k_seg/bdd100k/seg/color_labels/" + im_name + "_train_color.png")
+    else:
+        base_mask = misc.imread("bdd100k_seg/bdd100k/seg/color_labels/" + im_name + "_val_color.png")
+    base_image = misc.imread("bdd100k_seg/bdd100k/seg/images/" + im_name + ".jpg")
+    
     base_images.append(base_image)
     base_masks.append(base_mask)
     base_roads.append(match_grid(base_mask,road_color))
