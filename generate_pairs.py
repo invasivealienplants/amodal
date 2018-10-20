@@ -21,9 +21,76 @@ trail_color = [0,0,110,255]
 motor_color = [0,0,230,255]
 license_color = [0,0,142,255]
 road_color = [128,64,128,255]
+side_color = [244,35,232,255]
+ground_color = [81,0,81,255]
+veg_color = [107,142,35,255]
+terrain_color = [152,251,152,255]
 
 def match_grid(mask,c):
     return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2])*(mask[:,:,3]==c[3]),dtype=np.float32)
+
+match_scores = []
+
+base_images = []
+base_masks = []
+base_roads = []
+base_grounds = []
+base_sides = []
+base_vegs = []
+base_terrains = []
+
+for i in range(227):
+    a = f.readline()
+    counter = a[:a.index(",")]
+    base_images.append(misc.imread("base/" + str(counter) + "_image.png"))
+    base_masks.append(misc.imread("base/" + str(counter) + "_mask.png"))
+    base_roads.append(match_grid(base_mask,road_color))
+    base_grounds.append(match_grid(base_mask,ground_color))
+    base_sides.append(match_grid(base_mask,side_color))
+    base_vegs.append(match_grid(base_mask,veg_color))
+    base_terrains.append(match_grid(base_mask,terrain_color))
+    
+c = 0
+paths = []
+for root,_,mask_paths in os.walk("gtFine"):
+    if not ("/test" in root):
+        for mask_path in mask_paths:
+            if mask_path[-9:] == "color.png":
+                c += 1
+                subfolder = root[6:]
+                image_id = mask_path[:-17]
+                mask = misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
+                paths.append((subfolder,image_id))
+                
+                road = match_grid(mask,road_color)
+                ground = match_grid(mask,ground_color)
+                side = match_grid(mask,side_color)
+                veg = match_grid(mask,veg_color)
+                terrain = match_grid(mask,terrain_color)
+                
+                match_scores_ = []
+                for i in range(227):
+                    base_road = base_roads[i]
+                    base_ground = base_grounds[i]
+                    base_side = base_sides[i]
+                    base_veg = base_vegs[i]
+                    base_terrain = base_terrains[i]
+                    match_road = np.where(road>base_road,-1.0,1.0)*road
+                    match_side = np.where(side>base_side,-1.0,1.0)*side
+                    match_ground = np.where(ground>base_ground,-1.0,1.0)*ground
+                    match_veg = np.where(veg>base_veg,-1.0,1.0)*veg
+                    match_terrain = np.where(terrain>base_terrain,-1.0,1.0)*terrain
+                    score = np.sum(match_road+match_side+match_ground+match_veg+match_terrain)/np.sum(road+side+ground+veg+terrain)
+                    match_scores_.append(score)
+                    
+                match_scores.append(match_scores_)
+                print(c)
+                
+eabrgeragergear
+                
+                
+
+
 
 for i in range(227):
     print(i)
@@ -34,6 +101,10 @@ for i in range(227):
     base_image = misc.imread("base/" + str(counter) + "_image.png")
     base_mask = misc.imread("base/" + str(counter) + "_mask.png")
     base_road = match_grid(base_mask,road_color)
+    base_ground = match_grid(base_mask,ground_color)
+    base_side = match_grid(base_mask,side_color)
+    base_veg = match_grid(base_mask,veg_color)
+    base_terrain = match_grid(base_mask,terrain_color)
     for root,_,mask_paths in os.walk("gtFine"):
         if not ("/test" in root):
             for mask_path in mask_paths:
