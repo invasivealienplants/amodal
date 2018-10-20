@@ -8,7 +8,7 @@ import cv2
 from itertools import product
 from scipy.ndimage.measurements import label
 
-f = open("dict_file_bdd.txt","r")
+f = open("amodal/dict_file_bdd.txt","r")
 match_file = open("amodal/match_file_bdd.txt","w")
 
 car_color = [0,0,142,255]
@@ -43,11 +43,8 @@ base_terrains = []
 for i in range(219):
     a = f.readline()
     counter = a[:a.index(",")]
-    im_name = a[a.index(",")+1:]
-    if "train" in im_name:
-        base_mask = misc.imread("bdd100k_seg/bdd100k/seg/color_labels/" + im_name + "_train_color.png")
-    else:
-        base_mask = misc.imread("bdd100k_seg/bdd100k/seg/color_labels/" + im_name + "_val_color.png")
+    im_name = a[a.index(",")+1:][:-1]
+    base_mask = misc.imread("bdd100k_seg/bdd100k/seg/color_labels/" + im_name + "_train_color.png")
     base_image = misc.imread("bdd100k_seg/bdd100k/seg/images/" + im_name + ".jpg")
     
     base_images.append(base_image)
