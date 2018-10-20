@@ -94,6 +94,6 @@ for i in range(219):
     order = order[:,20]
     np.save("order_bdd.npy",order)
     match_file.write(str(i)+"\n")
-    for j in match_scores_:
+    for j in order[i]:
         match_file.write(str(paths[j])+"\n")
     match_file.write("\n")
