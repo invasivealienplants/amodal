@@ -100,7 +100,7 @@ for i in range(227):
                     score = np.sum(match_road+match_side+match_ground+match_veg+match_terrain)/np.sum(road+side+ground+veg+terrain)
                     match_scores_.append(score)
     match_scores.append(match_scores_)
-    order = np.argsort(match_scores,axis=1)
+    order = np.flip(np.argsort(match_scores,axis=1),1)
     order = order[:,:20]
     np.save("order.npy",order)
     match_file.write(str(i)+"\n")
