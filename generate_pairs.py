@@ -92,15 +92,18 @@ for i in range(227):
                     veg = match_grid(mask,veg_color)
                     terrain = match_grid(mask,terrain_color)
                     
-                    match_road = np.where(road>base_road,-1.0,1.0)*road
-                    match_side = np.where(side>base_side,-1.0,1.0)*side
-                    match_ground = np.where(ground>base_ground,-1.0,1.0)*ground
-                    match_veg = np.where(veg>base_veg,-1.0,1.0)*veg
-                    match_terrain = np.where(terrain>base_terrain,-1.0,1.0)*terrain
-                    score = np.sum(match_road+match_side+match_ground+match_veg+match_terrain)/np.sum(road+side+ground+veg+terrain)
+                    match_road = np.where(road>base_road,1.0,-1.0)*road
+                    match_side = np.where(side>base_side,1.0,-1.0)*side
+                    match_ground = np.where(ground>base_ground,1.0,-1.0)*ground
+                    match_veg = np.where(veg>base_veg,1.0,-1.0)*veg
+                    match_terrain = np.where(terrain>base_terrain,1.0,-1.0)*terrain
+                    if np.sum(road+side+ground+veg+terrain) == 0:
+                        score = np.inf
+                    else:
+                        score = np.sum(match_road+match_side+match_ground+match_veg+match_terrain)/np.sum(road+side+ground+veg+terrain)
                     match_scores_.append(score)
     match_scores.append(match_scores_)
-    order = np.flip(np.argsort(match_scores,axis=1),1)
+    order = np.argsort(match_scores,axis=1)
     order = order[:,:20]
     np.save("order.npy",order)
     match_file.write(str(i)+"\n")
