@@ -38,11 +38,9 @@
 40,/train/zurich,zurich_000112_000019
 41,/train/tubingen,tubingen_000028_000019
 42,/train/hanover,hanover_000000_019116
-#43,/train/jena,jena_000104_000019
 44,/train/aachen,aachen_000153_000019
 45,/train/hanover,hanover_000000_006922
 46,/train/weimar,weimar_000109_000019
-#47,/train/weimar,weimar_000110_000019
 48,/train/tubingen,tubingen_000134_000019
 49,/train/strasbourg,strasbourg_000001_043748
 50,/train/monchengladbach,monchengladbach_000000_028216
@@ -64,7 +62,6 @@
 69,/train/zurich,zurich_000082_000019
 70,/train/bremen,bremen_000188_000019
 71,/train/ulm,ulm_000079_000019
-#72,/train/dusseldorf,dusseldorf_000096_000019
 73,/val/frankfurt,frankfurt_000001_019698
 74,/train/dusseldorf,dusseldorf_000107_000019
 75,/train/bremen,bremen_000251_000019
@@ -72,7 +69,6 @@
 77,/train/dusseldorf,dusseldorf_000097_000019
 78,/train/dusseldorf,dusseldorf_000051_000019
 80,/train/bremen,bremen_000025_000019
-#81,/train/zurich,zurich_000108_000019
 82,/train/tubingen,tubingen_000142_000019
 83,/train/dusseldorf,dusseldorf_000022_000019
 84,/train/dusseldorf,dusseldorf_000103_000019
@@ -80,7 +76,6 @@
 87,/train/ulm,ulm_000052_000019
 88,/train/bremen,bremen_000033_000019
 90,/train/monchengladbach,monchengladbach_000001_002229
-#91,/val/frankfurt,frankfurt_000001_060135
 93,/train/hanover,hanover_000000_011170
 94,/train/strasbourg,strasbourg_000001_059914
 96,/train/strasbourg,strasbourg_000001_016481
@@ -102,7 +97,6 @@
 120,/train/dusseldorf,dusseldorf_000154_000019
 121,/train/strasbourg,strasbourg_000001_026606
 122,/train/bremen,bremen_000028_000019
-#123,/train/weimar,weimar_000140_000019
 128,/train/strasbourg,strasbourg_000001_031427
 132,/train/bremen,bremen_000162_000019
 137,/train/bremen,bremen_000039_000019
