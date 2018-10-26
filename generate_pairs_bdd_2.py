@@ -8,8 +8,8 @@ import cv2
 from itertools import product
 from scipy.ndimage.measurements import label
 
-dict_file = open("amodal/dict_file.txt","r")
-match_file = open("amodal/match_file.txt","r")
+dict_file = open("amodal/dict_file_bdd.txt","r")
+match_file = open("amodal/match_file_bdd.txt","r")
 
 car_color = [0,0,142,255]
 person_color = [255,0,0,255]
@@ -30,11 +30,11 @@ terrain_color = [152,251,152,255]
 def match_grid(mask,c):
     return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2]),dtype=np.float32)
   
-for i in range(227):
+for i in range(219):
     baseline = dict_file.readline()[:-1]
     baseline = baseline.split(",")
-    base_mask_path = 'gtFine'+baseline[1]+'/'+baseline[2]+'_gtFine_color.png'
-    base_im_path = 'leftImg8bit'+baseline[1]+'/'+baseline[2]+'_leftImg8bit.png'
+    base_mask_path = 'bdd100k_seg/bdd100k/seg/color_labels/'+baseline[1]+'_train_color.png'
+    base_im_path = 'bdd100k_seg/bdd100k/seg/images/'+baseline[1]+'.jpg'
     
     base_mask = misc.imread(base_mask_path)
     base_im = misc.imread(base_im_path)
@@ -46,14 +46,15 @@ for i in range(227):
     
     line = match_file.readline()
     while line != "\n":
-        line = line.split(", ")
-        folder = line[0][2:]
-        folder = folder[:len(folder)-1]
-        impath = line[1][1:]
-        impath = impath[:-3]
+        maskpath = line[:-1]
+        imname = line[:line.index("_")]
 
-        mask_path = 'gtFine'+folder+'/'+impath+'_gtFine_color.png'
-        im_path = 'leftImg8bit'+folder+'/'+impath+'leftImg8bit.png'
+        mask_path = 'bdd100k_seg/bdd100k/seg/color_labels/train'+maskpath
+        if not os.path.isfile(maskpath):
+            mask_path = 'bdd100k_seg/bdd100k/seg/color_labels/val'+maskpath
+            im_path = 'bdd100k_seg/bdd100k/seg/images/val'+imname+'.jpg'
+        else:
+            im_path = 'bdd100k_seg/bdd100k/seg/images/train'+imname+'.jpg'
         
         mask = misc.imread(mask_path)
         im = misc.imread(im_path)
@@ -79,7 +80,7 @@ for i in range(227):
         coordinates = np.reshape(coordinates,[width,height,2])
         for i in range(1,num_features+1):
             grid = np.where(labeled_array==i,1.0,0.0)
-            grid_3d = np.tile(np.reshape(grid,[1024,2048,1]),(1,1,3))
+            grid_3d = np.tile(np.reshape(grid,[720,1280,1]),(1,1,3))
             c = np.reshape(grid,[len(mask),len(mask[0]),1])*coordinates
             ground_y = np.max(c[:,:,0])
             ground_x1 = np.min(np.where(c[:,:,1]==0,np.inf,c[:,:,1]))
@@ -94,7 +95,7 @@ for i in range(227):
                 total_features += 1
                 
         if total_features > 0:
-            misc.imsave('base_pairs/'+str(base_id)+'_'+str(total_copies)+'.png')
+            misc.imsave('base_pairs_bdd/'+str(base_id)+'_'+str(total_copies)+'.png')
             total_copies += 1
         
         line = match_file.readline()
