@@ -25,8 +25,7 @@ for root,_,paths in os.walk("syn_data/images"):
     for p in paths:
         full_path = root+"/"+p
         im = misc.imread(full_path)
-        a = full_path.split("_")
-        print(a)
+        a = p.split("_")
         a = int(a[0])
         cityscapes_path = files[a]
         cityscapes_mask = misc.imread("cityscapes/gtFine/"+cityscapes_path[1]+"/"+cityscapes_path[2]+"_gtFine_color.png")
