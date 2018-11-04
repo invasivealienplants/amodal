@@ -33,7 +33,7 @@ for root,_,paths in os.walk("syn_data/images"):
         
         eq = np.array(cityscapes_im==im,dtype=np.float32)
         road = match_grid(cityscapes_mask,road_color)
-        binary_mask = np.where(eq[:,:,0]==0,road,0.0)
+        binary_mask = np.where(eq[:,:,0]==0,road,255.0)
         
         cutout_im = im*eq
         
