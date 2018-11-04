@@ -3,7 +3,7 @@ from scipy import misc
 import numpy as np
 
 files = []
-f = open("dict_file.txt")
+f = open("dict_file.txt","r")
 for line in f:
     i = line[:-1].split(",")
     i[0] = int(i[0])
