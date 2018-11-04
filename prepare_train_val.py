@@ -20,9 +20,9 @@ val_labels_f = open("val_labels.txt","w")
 
 c = 0
 for root,_,paths in os.walk("syn_data/images"):
-    print(c)
-    c += 1
     for p in paths:
+        print(c)
+        c += 1
         full_path = root+"/"+p
         im = misc.imread(full_path)
         a = p.split("_")
