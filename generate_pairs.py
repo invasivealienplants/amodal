@@ -9,7 +9,7 @@ from itertools import product
 from scipy.ndimage.measurements import label
 
 f = open("amodal/dict_file.txt","r")
-match_file = open("amodal/match_file.txt","w")
+match_file = open("amodal/match_file_v2.txt","w")
 
 car_color = [0,0,142,255]
 person_color = [255,0,0,255]
@@ -32,6 +32,7 @@ def match_grid(mask,c):
 
 match_scores = []
 
+base_paths = []
 base_images = []
 base_masks = []
 base_roads = []
@@ -55,6 +56,7 @@ for i in range(227):
     counter = a[:a.index(",")]
     base_image = misc.imread("base/" + str(counter) + "_image.png")
     base_mask = misc.imread("base/" + str(counter) + "_mask.png")
+    base_paths.append(a[a.index(",")+1:])
     
     base_images.append(base_image)
     base_masks.append(base_mask)
@@ -73,6 +75,7 @@ for i in range(227):
     base_side = base_sides[i]
     base_veg = base_vegs[i]
     base_terrain = base_terrains[i]
+    base_path = base_paths[i]
     
     match_scores_ = []
     paths = []
@@ -80,7 +83,7 @@ for i in range(227):
     for root,_,mask_paths in os.walk("gtFine"):
         if not ("/test" in root):
             for mask_path in mask_paths:
-                if mask_path[-9:] == "color.png":
+                if mask_path[-9:] == "color.png" and (("val" in base_path and "val" in mask_path) or ("train" in base_path and "train" in mask_path)):
                     subfolder = root[6:]
                     image_id = mask_path[:-17]
                     mask = misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
