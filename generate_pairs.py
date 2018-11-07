@@ -84,7 +84,7 @@ for i in range(227):
         if not ("/test" in root):
             for mask_path in mask_paths:
                 if mask_path[-9:] == "color.png" and (("val" in base_path and "val" in root) or ("train" in base_path and "train" in root)):
-                    subfolder = root[6:]
+                    subfolder = root[17:]
                     image_id = mask_path[:-17]
                     mask = misc.imread("cityscapes/gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
                     paths.append((subfolder,image_id))
