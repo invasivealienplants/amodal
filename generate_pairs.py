@@ -80,14 +80,13 @@ for i in range(227):
     match_scores_ = []
     paths = []
     
-    for root,_,mask_paths in os.walk("gtFine"):
+    for root,_,mask_paths in os.walk("cityscapes/gtFine"):
         if not ("/test" in root):
             for mask_path in mask_paths:
-                print(base_path,mask_path)
                 if mask_path[-9:] == "color.png" and (("val" in base_path and "val" in mask_path) or ("train" in base_path and "train" in mask_path)):
                     subfolder = root[6:]
                     image_id = mask_path[:-17]
-                    mask = misc.imread("gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
+                    mask = misc.imread("cityscapes/gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
                     paths.append((subfolder,image_id))
                     
                     road = match_grid(mask,road_color)
