@@ -60,10 +60,9 @@ for i in range(227):
     pth = a[2]
     rtpth = rt+"/"+pth
     
-    base_image = misc.imread("cityscapes/gtFine" + rtpth + "_gtFine_color.png")
-    base_mask = misc.imread("cityscapes/leftImg8bit" + rtpth + "_leftImg8bit.png")
+    base_mask = misc.imread("cityscapes/gtFine" + rtpth + "_gtFine_color.png")
+    base_image = misc.imread("cityscapes/leftImg8bit" + rtpth + "_leftImg8bit.png")
     base_paths.append(rtpth)
-    print(rtpth)
     
     base_images.append(base_image)
     base_masks.append(base_mask)
@@ -75,8 +74,6 @@ for i in range(227):
     
 for i in range(227):
     print(i)
-    if i < 8:
-        continue
     
     base_image = base_images[i]
     base_mask = base_masks[i]
@@ -99,7 +96,6 @@ for i in range(227):
                         image_id = mask_path[:-17]
                         mask = misc.imread("cityscapes/gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
                         paths.append((subfolder,image_id))
-                        print("cityscapes/gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
 
                         road = match_grid(mask,road_color)
                         ground = match_grid(mask,ground_color)
@@ -117,7 +113,6 @@ for i in range(227):
                             score = np.inf
                         else:
                             score = np.sum(match_road+match_side+match_ground+match_veg+match_terrain)/np.sum(road+side+ground+veg+terrain)
-                        print(score)
                         match_scores_.append(score)
                     
     order = np.argsort(match_scores_)[:20]
