@@ -37,7 +37,7 @@ for root,_,paths in os.walk("syn_data/images"):
 #         binary_mask = np.where(eq[:,:,0]==0,road,255.0)
         binary_mask = road
         
-        cutout_im = im*eq
+        cutout_im = im*np.reshape(eq,[1024,2048,1])
         
         if "train" in full_path:
             misc.imsave("syn_data/binary_labels/train/" + p,binary_mask)
