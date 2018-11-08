@@ -31,6 +31,7 @@ def match_grid(mask,c):
     return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2]),dtype=np.float32)
 
 match_scores = []
+order = []
 
 base_paths = []
 base_images = []
@@ -73,6 +74,9 @@ for i in range(227):
     
 for i in range(227):
     print(i)
+    if i < 8:
+        continue
+    
     base_image = base_images[i]
     base_mask = base_masks[i]
     base_road = base_roads[i]
@@ -110,11 +114,9 @@ for i in range(227):
                     else:
                         score = np.sum(match_road+match_side+match_ground+match_veg+match_terrain)/np.sum(road+side+ground+veg+terrain)
                     match_scores_.append(score)
-    match_scores.append(match_scores_)
-    order = np.argsort(match_scores,axis=1)
-    order = order[:,:20]
-    np.save("order.npy",order)
+                    
+    order = np.argsort(match_scores_)[:20]
     match_file.write(str(i)+"\n")
-    for j in order[i]:
+    for j in order:
         match_file.write(str(paths[j])+"\n")
     match_file.write("\n")
