@@ -42,12 +42,12 @@ for root,_,paths in os.walk("syn_data/images"):
         if "train" in full_path:
 #             misc.imsave("syn_data/binary_labels/train/" + p,binary_mask)
 #             misc.imsave("syn_data/cutouts/train/" + p,cutout_im)
-#             train_images_f.write("syn_data/binary_labels/train/"+p+"\n")
-#             train_labels_f.write("syn_data/cutouts/train/"+p+"\n")
+#             train_labels_f.write("syn_data/binary_labels/train/"+p+"\n")
+#             train_images_f.write("syn_data/cutouts/train/"+p+"\n")
             misc.imsave("syn_data/paste_mask/train/"+p,eq)
         else:
 #             misc.imsave("syn_data/binary_labels/val/" + p,binary_mask)
 #             misc.imsave("syn_data/cutouts/val/" + p,cutout_im)
-#             val_images_f.write("syn_data/binary_labels/val/"+p+"\n")
-#             val_labels_f.write("syn_data/cutouts/val/"+p+"\n")   
+#             val_labels_f.write("syn_data/binary_labels/val/"+p+"\n")
+#             val_images_f.write("syn_data/cutouts/val/"+p+"\n")   
             misc.imsave("syn_data/paste_mask/val/"+p,eq)
