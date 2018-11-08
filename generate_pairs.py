@@ -8,8 +8,8 @@ import cv2
 from itertools import product
 from scipy.ndimage.measurements import label
 
-f = open("amodal/dict_file.txt","r")
-match_file = open("amodal/match_file_v2.txt","w")
+f = open("dict_file.txt","r")
+match_file = open("match_file_v2.txt","w")
 
 car_color = [0,0,142,255]
 person_color = [255,0,0,255]
@@ -83,6 +83,8 @@ for i in range(227):
     for root,_,mask_paths in os.walk("cityscapes/gtFine"):
         if not ("/test" in root):
             for mask_path in mask_paths:
+                if ("val" in base_path or "val" in root):
+                    print(base_path,mask_path,root)
                 if mask_path[-9:] == "color.png" and (("val" in base_path and "val" in root) or ("train" in base_path and "train" in root)):
                     subfolder = root[17:]
                     image_id = mask_path[:-17]
