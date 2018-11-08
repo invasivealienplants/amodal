@@ -13,10 +13,10 @@ road_color = [128,64,128,255]
 def match_grid(mask,c):
     return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2]),dtype=np.float32)
   
-train_images_f = open("train_images.txt","w")
-train_labels_f = open("train_labels.txt","w")
-val_images_f = open("val_images.txt","w")
-val_labels_f = open("val_labels.txt","w")
+# train_images_f = open("train_images.txt","w")
+# train_labels_f = open("train_labels.txt","w")
+# val_images_f = open("val_images.txt","w")
+# val_labels_f = open("val_labels.txt","w")
 
 c = 0
 for root,_,paths in os.walk("syn_data/images"):
