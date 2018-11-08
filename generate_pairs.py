@@ -54,9 +54,14 @@ base_terrains = []
 for i in range(227):
     a = f.readline()
     counter = a[:a.index(",")]
-    base_image = misc.imread("base/" + str(counter) + "_image.png")
-    base_mask = misc.imread("base/" + str(counter) + "_mask.png")
-    base_paths.append(a[a.index(",")+1:])
+    a = a[:-1].split(",")
+    rt = a[1]
+    pth = a[2]
+    rtpth = rt+"/"+pth
+    
+    base_image = misc.imread("cityscapes/gtFine" + rtpth + "_gtFine_color.png")
+    base_mask = misc.imread("cityscapes/leftImg8bit" + rtpth + "_leftImg8bit.png")
+    base_paths.append(rtpth)
     
     base_images.append(base_image)
     base_masks.append(base_mask)
@@ -83,8 +88,10 @@ for i in range(227):
     for root,_,mask_paths in os.walk("cityscapes/gtFine"):
         if not ("/test" in root):
             for mask_path in mask_paths:
-                if ("val" in base_path or "val" in root):
+                if "val" in base_path:
                     print(base_path,mask_path,root)
+                if not "val" in base_path:
+                    break
                 if mask_path[-9:] == "color.png" and (("val" in base_path and "val" in root) or ("train" in base_path and "train" in root)):
                     subfolder = root[17:]
                     image_id = mask_path[:-17]
