@@ -116,15 +116,11 @@ for i in range(227):
                         else:
                             score = np.sum(match_road+match_side+match_ground+match_veg+match_terrain)/np.sum(road+side+ground+veg+terrain)
                         match_scores_.append(score)
-                    else:
-                        match_scores_.append(np.inf)
                     
-    print(order)
-    print(len(order))
     order = np.argsort(match_scores_)[:20]
+    print(match_scores_)
     print(order)
-    print(len(order))
-    print(len(paths))
+    print(paths)
     match_file.write(str(i)+"\n")
     for j in order:
         match_file.write(str(paths[j])+"\n")
