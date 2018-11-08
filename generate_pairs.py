@@ -120,7 +120,6 @@ for i in range(227):
     order = np.argsort(match_scores_)[:20]
     print(match_scores_)
     print(order)
-    print(paths)
     match_file.write(str(i)+"\n")
     for j in order:
         match_file.write(str(paths[j])+"\n")
