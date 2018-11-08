@@ -99,6 +99,7 @@ for i in range(227):
                         image_id = mask_path[:-17]
                         mask = misc.imread("cityscapes/gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
                         paths.append((subfolder,image_id))
+                        print("cityscapes/gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
 
                         road = match_grid(mask,road_color)
                         ground = match_grid(mask,ground_color)
@@ -111,6 +112,12 @@ for i in range(227):
                         match_ground = np.where(ground>base_ground,1.0,-1.0)*ground
                         match_veg = np.where(veg>base_veg,1.0,-1.0)*veg
                         match_terrain = np.where(terrain>base_terrain,1.0,-1.0)*terrain
+                        print(np.sum(match_road))
+                        print(np.sum(match_side))
+                        print(np.sum(match_ground))
+                        print(np.sum(match_veg))
+                        print(np.sum(match_terrain))
+                        
                         if np.sum(road+side+ground+veg+terrain) == 0:
                             score = np.inf
                         else:
