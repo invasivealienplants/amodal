@@ -31,9 +31,11 @@ for root,_,paths in os.walk("syn_data/images"):
         cityscapes_mask = misc.imread("cityscapes/gtFine/"+cityscapes_path[1]+"/"+cityscapes_path[2]+"_gtFine_color.png")
         cityscapes_im = misc.imread("cityscapes/leftImg8bit/"+cityscapes_path[1]+"/"+cityscapes_path[2]+"_leftImg8bit.png")
         
-        eq = np.array(cityscapes_im==im,dtype=np.float32)
+#         eq = np.array(cityscapes_im==im,dtype=np.float32)
+        eq = np.array((cityscapes_im[:,:,0]==im[:,:,0])*(cityscapes_im[:,:,1]==im[:,:,1])*(cityscapes_im[:,:,2]==im[:,:,2]),dtype=np.float32)
         road = match_grid(cityscapes_mask,road_color)
-        binary_mask = np.where(eq[:,:,0]==0,road,255.0)
+#         binary_mask = np.where(eq[:,:,0]==0,road,255.0)
+        binary_mask = road
         
         cutout_im = im*eq
         
