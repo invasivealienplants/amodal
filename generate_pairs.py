@@ -112,16 +112,12 @@ for i in range(227):
                         match_ground = np.where(ground>base_ground,1.0,-1.0)*ground
                         match_veg = np.where(veg>base_veg,1.0,-1.0)*veg
                         match_terrain = np.where(terrain>base_terrain,1.0,-1.0)*terrain
-                        print(np.sum(match_road))
-                        print(np.sum(match_side))
-                        print(np.sum(match_ground))
-                        print(np.sum(match_veg))
-                        print(np.sum(match_terrain))
                         
                         if np.sum(road+side+ground+veg+terrain) == 0:
                             score = np.inf
                         else:
                             score = np.sum(match_road+match_side+match_ground+match_veg+match_terrain)/np.sum(road+side+ground+veg+terrain)
+                        print(score)
                         match_scores_.append(score)
                     
     order = np.argsort(match_scores_)[:20]
