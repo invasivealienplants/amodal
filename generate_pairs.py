@@ -93,7 +93,7 @@ for i in range(227):
     for root,_,mask_paths in os.walk("cityscapes/gtFine"):
         if not ("/test" in root):
             for mask_path in mask_paths:
-                if mask_path[-9:] == "color.png" 
+                if mask_path[-9:] == "color.png":
                     if (("val" in base_path and "val" in root) or ("train" in base_path and "train" in root)):
                         subfolder = root[17:]
                         image_id = mask_path[:-17]
