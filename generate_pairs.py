@@ -9,7 +9,7 @@ from itertools import product
 from scipy.ndimage.measurements import label
 
 f = open("dict_file.txt","r")
-match_file = open("match_file_v2.txt","w")
+match_file = open("/home/pp456/match_file_v2.txt","w")
 
 car_color = [0,0,142,255]
 person_color = [255,0,0,255]
