@@ -9,10 +9,7 @@ import cv2
 f = open("base_bdd/dict_file_bdd.txt","w")
 
 def match_grid(mask,c):
-    if mask.shape[-1] == 4:
-        return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2])*(mask[:,:,3]==c[3]),dtype=np.float32)
-    elif mask.shape[-1] == 3:
-        return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2]),dtype=np.float32)
+    return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2])*(mask[:,:,3]==c[3]),dtype=np.float32)
     
 car_color = [0,0,142,255]
 person_color = [255,0,0,255]
@@ -72,8 +69,12 @@ for root,_,mask_paths in os.walk("bdd100k_seg/bdd100k/seg/color_labels/"):
             total_count += 1
             subfolder = root[24:]
             image_id = mask_path[:-16]
-            base_masks.append(misc.imread(root+"/"+mask_path))
-            base_images.append(misc.imread("bdd100k_seg/bdd100k/seg/images/"+root[37:]+"/"+image_id+".jpg"))
+            base_mask = misc.imread(root+"/"+mask_path)
+            base_image = misc.imread("bdd100k_seg/bdd100k/seg/images/"+root[37:]+"/"+image_id+".jpg")
+            if base_mask.shape[-1] != 4:
+                continue
+            base_masks.append(base_mask)
+            base_images.append(base_image)
             image_id = subfolder+"/"+image_id
             base_image_ids.append(image_id)
             if len(base_images) % 1000 == 0:
