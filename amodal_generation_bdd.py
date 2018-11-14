@@ -9,7 +9,11 @@ import cv2
 f = open("base_bdd/dict_file_bdd.txt","w")
 
 def match_grid(mask,c):
-    return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2])*(mask[:,:,3]==c[3]),dtype=np.float32)
+    if mask.shape[-1] == 4:
+        return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2])*(mask[:,:,3]==c[3]),dtype=np.float32)
+    elif mask.shape[-1] == 3:
+        return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2]),dtype=np.float32)
+    
 car_color = [0,0,142,255]
 person_color = [255,0,0,255]
 bike_color = [119,11,32,255]
