@@ -67,11 +67,10 @@ for root,_,mask_paths in os.walk("bdd100k_seg/bdd100k/seg/color_labels/"):
         if mask_path[-9:] == "color.png":
             total_count += 1
             subfolder = root[24:]
-            image_id = mask_path[:-15]
-            print(subfolder+"/"+image_id)
-            image_id = subfolder+"/"+image_id
+            image_id = mask_path[:-16]
             base_masks.append(misc.imread("bdd100k_seg/bdd100k/seg/color_labels/"+image_id+"_train_color.png"))
             base_images.append(misc.imread("bdd100k_seg/bdd100k/seg/images/"+image_id+".jpg"))
+            image_id = subfolder+"/"+image_id
             base_image_ids.append(image_id)
             if len(base_images) % 1000 == 0:
                 print("Images passed through : " + str(len(base_images)))
