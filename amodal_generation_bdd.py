@@ -70,8 +70,8 @@ for root,_,mask_paths in os.walk("bdd100k_seg/bdd100k/seg/color_labels/"):
             
             subfolder = root[24:]
             image_id = mask_path[:-16]
-            base_masks.append(misc.imread("bdd100k_seg/bdd100k/seg/color_labels/"+image_id+"_train_color.png"))
-            base_images.append(misc.imread("bdd100k_seg/bdd100k/seg/images/"+image_id+".jpg"))
+            base_masks.append(misc.imread(root+"/"+mask_path))
+            base_images.append(misc.imread("bdd100k_seg/bdd100k/seg/images/"+root[37:]+"/"+image_id+".jpg"))
             image_id = subfolder+"/"+image_id
             base_image_ids.append(image_id)
             if len(base_images) % 1000 == 0:
