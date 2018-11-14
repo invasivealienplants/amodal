@@ -46,7 +46,7 @@ def calculate_foreground(images,masks):
         percent_foreground.append(np.mean(fore_grid))
     return percent_foreground
   
-  def get_top_k(images,masks,image_ids,k=500):
+def get_top_k(images,masks,image_ids,k=500):
     percent_foreground = calculate_foreground(images,masks)
     order = np.argsort(percent_foreground)[:k]
     i_ = []
