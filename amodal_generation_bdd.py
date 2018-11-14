@@ -66,8 +66,6 @@ for root,_,mask_paths in os.walk("bdd100k_seg/bdd100k/seg/color_labels/"):
     for mask_path in mask_paths:
         if mask_path[-9:] == "color.png":
             total_count += 1
-            print(root,mask_path)
-            
             subfolder = root[24:]
             image_id = mask_path[:-16]
             base_masks.append(misc.imread(root+"/"+mask_path))
