@@ -84,6 +84,7 @@ for i in range(271):
                         subfolder = root[24:]
                         image_id = mask_path[:-16]
                         mask = misc.imread(root+"/"+mask_path)
+                        paths.append(image_id)
                         if mask.shape[-1] != 4:
                             match_scores_.append(np.inf)
                             continue
