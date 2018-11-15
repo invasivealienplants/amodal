@@ -9,7 +9,7 @@ from itertools import product
 from scipy.ndimage.measurements import label
 
 f = open("amodal/dict_file_bdd.txt","r")
-match_file = open("home/pp456/match_file_bdd.txt","w")
+match_file = open("/home/pp456/match_file_bdd.txt","w")
 
 person_color = [220,20,60,255]
 rider_color = [255,0,0,255]
