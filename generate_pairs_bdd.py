@@ -84,6 +84,9 @@ for i in range(271):
                         subfolder = root[24:]
                         image_id = mask_path[:-16]
                         mask = misc.imread(root+"/"+mask_path)
+                        if mask.shape[-1] != 4:
+                            match_scores_.append(np.inf)
+                            continue
                         ground = match_grid(mask,ground_color)
                         park = match_grid(mask,park_color)
                         road = match_grid(mask,road_color)
