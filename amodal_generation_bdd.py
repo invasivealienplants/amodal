@@ -10,22 +10,17 @@ f = open("base_bdd/dict_file_bdd.txt","w")
 
 def match_grid(mask,c):
     return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2])*(mask[:,:,3]==c[3]),dtype=np.float32)
-    
-car_color = [0,0,142,255]
-person_color = [255,0,0,255]
+
+person_color = [220,20,60,255]
+rider_color = [255,0,0,255]
 bike_color = [119,11,32,255]
-ped_color = [220,20,60,255]
-pet_color = [111,74,0,255]
 bus_color = [0,60,100,255]
-truck_color = [0,0,90,255]
-trail_color = [0,0,110,255]
+car_color = [0,0,142,255]
+caravan_color = [0,0,90,255]
 motor_color = [0,0,230,255]
-license_color = [0,0,142,255]
-road_color = [128,64,128,255]
-side_color = [244,35,232,255]
-ground_color = [81,0,81,255]
-veg_color = [107,142,35,255]
-terrain_color = [152,251,152,255]
+trail_color = [0,0,110,255]
+train_color = [0,80,100,255]
+truck_color = [0,0,70,255]
 
 def calculate_foreground(images,masks):
     # foreground
@@ -33,17 +28,17 @@ def calculate_foreground(images,masks):
     for i,(image,mask) in enumerate(zip(images,masks)):
         image = np.array(image)
         mask = np.array(mask)
-        cargrid = match_grid(mask,car_color)
         pergrid = match_grid(mask,person_color)
+        ridergrid = match_grid(mask,rider_color)
         bikegrid = match_grid(mask,bike_color)
-        pedgrid = match_grid(mask,ped_color)
-        petgrid = match_grid(mask,pet_color)
         busgrid = match_grid(mask,bus_color)
-        truckgrid = match_grid(mask,truck_color)
-        trailgrid = match_grid(mask,trail_color)
+        cargrid = match_grid(mask,car_color)
+        carvgrid = match_grid(mask,caravan_color)
         motorgrid = match_grid(mask,motor_color)
-        licensegrid = match_grid(mask,license_color)
-        fore_grid = np.minimum(cargrid+pergrid+bikegrid+pedgrid+petgrid+busgrid+truckgrid+trailgrid+motorgrid+licensegrid,1.0)
+        trailgrid = match_grid(mask,trail_color)
+        traingrid = match_grid(mask,train_color)
+        truckgrid = match_grid(mask,truck_color)
+        fore_grid = np.minimum(1.0,pergrid+ridergrid+bikegrid+busgrid+cargrid+carvgrid+motorgrid+trailgrid+traingrid+truckgrid)
         percent_foreground.append(np.mean(fore_grid))
     return percent_foreground
   
