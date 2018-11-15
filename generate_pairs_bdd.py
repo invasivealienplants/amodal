@@ -84,7 +84,7 @@ for i in range(271):
                         subfolder = root[24:]
                         image_id = mask_path[:-16]
                         mask = misc.imread(root+"/"+mask_path)
-                        paths.append(image_id)
+                        paths.append(subfolder+","+image_id)
                         if mask.shape[-1] != 4:
                             match_scores_.append(np.inf)
                             continue
@@ -108,7 +108,7 @@ for i in range(271):
                             score = np.sum(match_ground+match_park+match_road+match_side+match_terrain+match_veg)/np.sum(ground+park+road+side+terrain+veg)
                         match_scores_.append(score)
     order = np.argsort(match_scores_)[:30]
-    print(match_scores_)
+    print(np.unique(match_scores_))
     print(order)
     match_file.write(str(i)+"\n")
     for j in order:
