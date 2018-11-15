@@ -101,7 +101,7 @@ for i in range(271):
                         if np.sum(ground+park+road+side+terrain+veg) == 0:
                             score = np.inf
                         else:
-                            score = np.sum(match_ground+match_park+match_road+match_side+match_terrain+match_veg)/np.sum(ground+park+road+side+terrain+veg
+                            score = np.sum(match_ground+match_park+match_road+match_side+match_terrain+match_veg)/np.sum(ground+park+road+side+terrain+veg)
                         match_scores_.append(score)
     match_scores.append(match_scores_)
     order = np.argsort(match_scores,axis=1)
