@@ -58,7 +58,7 @@ for i in range(219):
     base_grounds.append(match_grid(base_mask,ground_color))
     base_parks.append(match_grid(base_mask,park_color))
     base_roads.append(match_grid(base_mask,road_color))
-    base_sides.append(match_grid(base_mask,grid_color))
+    base_sides.append(match_grid(base_mask,side_color))
     base_terrains.append(match_grid(base_mask,terrain_color))
     base_vegs.append(match_grid(base_mask,veg_color))
     
