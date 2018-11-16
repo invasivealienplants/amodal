@@ -9,7 +9,7 @@ from itertools import product
 from scipy.ndimage.measurements import label
 
 f = open("amodal/dict_file_bdd.txt","r")
-match_file = open("amodal/match_file_bdd.txt","w")
+match_file = open("amodal/match_file_bdd.txt","a")
 
 person_color = [220,20,60,255]
 rider_color = [255,0,0,255]
@@ -44,7 +44,7 @@ base_sides = []
 base_terrains = []
 base_vegs = []
 
-for i in range(219):
+for i in range(271):
     a = f.readline()
     a = a.split(",")
     counter = a[0]
@@ -62,7 +62,7 @@ for i in range(219):
     base_terrains.append(match_grid(base_mask,terrain_color))
     base_vegs.append(match_grid(base_mask,veg_color))
     
-for i in range(271):
+for i in range(219,271):
     print(i)
     base_path = base_paths[i]
     base_image = base_images[i]
