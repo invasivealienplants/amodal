@@ -54,7 +54,7 @@ for i in range(227):
         print(folder,impath)
 
         mask_path = 'cityscapes/gtFine'+folder+'/'+impath+'_gtFine_color.png'
-        im_path = 'cityscapes/leftImg8bit'+folder+'/'+impath+'leftImg8bit.png'
+        im_path = 'cityscapes/leftImg8bit'+folder+'/'+impath+'_leftImg8bit.png'
         
         mask = misc.imread(mask_path)
         im = misc.imread(im_path)
