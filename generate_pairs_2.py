@@ -51,8 +51,7 @@ for i in range(227):
         folder = folder[:len(folder)-1]
         impath = line[1][1:]
         impath = impath[:-3]
-        print(folder,impath)
-
+        
         mask_path = 'cityscapes/gtFine'+folder+'/'+impath+'_gtFine_color.png'
         im_path = 'cityscapes/leftImg8bit'+folder+'/'+impath+'_leftImg8bit.png'
         
@@ -93,13 +92,17 @@ for i in range(227):
             line_match = np.array(line_match,dtype=np.float32)
             
             if np.mean(line_match) > 0.85:
-                new_base = np.where(grid_3d==1,image,new_base)
+                new_base = np.where(grid_3d==1,im,new_base)
                 new_base_mask = np.where(grid_4d==1,mask,new_base_mask)
                 total_features += 1
                 
         if total_features > 0:
-#             misc.imsave('base_pairs/'+str(base_id)+'_'+str(total_copies)+'.png')
-            misc.imsave('modal_masks/'+str(base_id)+'_'+str(total_copies)+'.png')
+            if 'train' in folder:
+    #             misc.imsave('base_pairs/train/'+str(base_id)+'_'+str(total_copies)+'.png')
+                misc.imsave('modal_masks/train/'+str(base_id)+'_'+str(total_copies)+'.png')
+            else:
+    #             misc.imsave('base_pairs/train/'+str(base_id)+'_'+str(total_copies)+'.png') 
+                misc.imsave('modal_masks/val/'+str(base_id)+'_'+str(total_copies)+'.png')
             total_copies += 1
         
         line = match_file.readline()
