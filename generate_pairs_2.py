@@ -33,8 +33,8 @@ def match_grid(mask,c):
 for i in range(227):
     baseline = dict_file.readline()[:-1]
     baseline = baseline.split(",")
-    base_mask_path = 'gtFine'+baseline[1]+'/'+baseline[2]+'_gtFine_color.png'
-    base_im_path = 'leftImg8bit'+baseline[1]+'/'+baseline[2]+'_leftImg8bit.png'
+    base_mask_path = 'cityscapes/gtFine'+baseline[1]+'/'+baseline[2]+'_gtFine_color.png'
+    base_im_path = 'cityscapes/leftImg8bit'+baseline[1]+'/'+baseline[2]+'_leftImg8bit.png'
     
     base_mask = misc.imread(base_mask_path)
     base_im = misc.imread(base_im_path)
@@ -53,8 +53,8 @@ for i in range(227):
         impath = impath[:-3]
         print(folder,impath)
 
-        mask_path = 'gtFine'+folder+'/'+impath+'_gtFine_color.png'
-        im_path = 'leftImg8bit'+folder+'/'+impath+'leftImg8bit.png'
+        mask_path = 'cityscapes/gtFine'+folder+'/'+impath+'_gtFine_color.png'
+        im_path = 'cityscapes/leftImg8bit'+folder+'/'+impath+'leftImg8bit.png'
         
         mask = misc.imread(mask_path)
         im = misc.imread(im_path)
