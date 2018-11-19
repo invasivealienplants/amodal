@@ -98,11 +98,11 @@ for i in range(227):
                 
         if total_features > 0:
             if 'train' in folder:
-    #             misc.imsave('base_pairs/train/'+str(base_id)+'_'+str(total_copies)+'.png')
-                misc.imsave('modal_masks/train/'+str(base_id)+'_'+str(total_copies)+'.png')
+    #             misc.imsave('base_pairs/train/'+str(base_id)+'_'+str(total_gen)+'.png')
+                misc.imsave('modal_masks/train/'+str(base_id)+'_'+str(total_gen)+'.png')
             else:
-    #             misc.imsave('base_pairs/train/'+str(base_id)+'_'+str(total_copies)+'.png') 
-                misc.imsave('modal_masks/val/'+str(base_id)+'_'+str(total_copies)+'.png')
-            total_copies += 1
+    #             misc.imsave('base_pairs/train/'+str(base_id)+'_'+str(total_gen)+'.png') 
+                misc.imsave('modal_masks/val/'+str(base_id)+'_'+str(total_gen)+'.png')
+            total_gen += 1
         
         line = match_file.readline()
