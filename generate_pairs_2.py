@@ -31,6 +31,7 @@ def match_grid(mask,c):
     return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2]),dtype=np.float32)
   
 for i in range(227):
+    print(i)
     baseline = dict_file.readline()[:-1]
     baseline = baseline.split(",")
     base_mask_path = 'cityscapes/gtFine'+baseline[1]+'/'+baseline[2]+'_gtFine_color.png'
@@ -91,7 +92,7 @@ for i in range(227):
             line_match = np.array(line[:,0]==road_color[0])*np.array(line[:,1]==road_color[1])*np.array(line[:,2]==road_color[2])*np.array(line[:,3]==road_color[3])
             line_match = np.array(line_match,dtype=np.float32)
             
-            if np.mean(line_match) > 0.85:
+            if len(line_match) > 0 and np.mean(line_match) > 0.85:
                 new_base = np.where(grid_3d==1,im,new_base)
                 new_base_mask = np.where(grid_4d==1,mask,new_base_mask)
                 total_features += 1
