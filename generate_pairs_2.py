@@ -73,7 +73,7 @@ for i in range(227):
         labeled_array,num_features = label(fore_grid,structure=np.ones([3,3]))
         
         total_features = 0
-        new_base = np.copy(base_image)
+        new_base = np.copy(base_im)
         new_base_mask = np.copy(base_mask)
         width = len(mask)
         height = len(mask[0])
