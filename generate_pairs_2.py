@@ -51,6 +51,7 @@ for i in range(227):
         folder = folder[:len(folder)-1]
         impath = line[1][1:]
         impath = impath[:-3]
+        print(folder,impath)
 
         mask_path = 'gtFine'+folder+'/'+impath+'_gtFine_color.png'
         im_path = 'leftImg8bit'+folder+'/'+impath+'leftImg8bit.png'
@@ -73,6 +74,7 @@ for i in range(227):
         
         total_features = 0
         new_base = np.copy(base_image)
+        new_base_mask = np.copy(base_mask)
         width = len(mask)
         height = len(mask[0])
         coordinates = list(product(range(width), range(height)))
@@ -80,6 +82,7 @@ for i in range(227):
         for i in range(1,num_features+1):
             grid = np.where(labeled_array==i,1.0,0.0)
             grid_3d = np.tile(np.reshape(grid,[1024,2048,1]),(1,1,3))
+            grid_4d = np.tile(np.reshape(grid,[1024,2048,1]),(1,1,4))
             c = np.reshape(grid,[len(mask),len(mask[0]),1])*coordinates
             ground_y = np.max(c[:,:,0])
             ground_x1 = np.min(np.where(c[:,:,1]==0,np.inf,c[:,:,1]))
@@ -91,10 +94,12 @@ for i in range(227):
             
             if np.mean(line_match) > 0.85:
                 new_base = np.where(grid_3d==1,image,new_base)
+                new_base_mask = np.where(grid_4d==1,mask,new_base_mask)
                 total_features += 1
                 
         if total_features > 0:
-            misc.imsave('base_pairs/'+str(base_id)+'_'+str(total_copies)+'.png')
+#             misc.imsave('base_pairs/'+str(base_id)+'_'+str(total_copies)+'.png')
+            misc.imsave('modal_masks/'+str(base_id)+'_'+str(total_copies)+'.png')
             total_copies += 1
         
         line = match_file.readline()
