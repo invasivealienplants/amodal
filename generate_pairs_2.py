@@ -31,10 +31,11 @@ def match_grid(mask,c):
     return np.array((mask[:,:,0]==c[0])*(mask[:,:,1]==c[1])*(mask[:,:,2]==c[2]),dtype=np.float32)
   
 for i in range(227):
+    print(i)
     baseline = dict_file.readline()[:-1]
     baseline = baseline.split(",")
-    base_mask_path = 'gtFine'+baseline[1]+'/'+baseline[2]+'_gtFine_color.png'
-    base_im_path = 'leftImg8bit'+baseline[1]+'/'+baseline[2]+'_leftImg8bit.png'
+    base_mask_path = 'cityscapes/gtFine'+baseline[1]+'/'+baseline[2]+'_gtFine_color.png'
+    base_im_path = 'cityscapes/leftImg8bit'+baseline[1]+'/'+baseline[2]+'_leftImg8bit.png'
     
     base_mask = misc.imread(base_mask_path)
     base_im = misc.imread(base_im_path)
@@ -51,9 +52,9 @@ for i in range(227):
         folder = folder[:len(folder)-1]
         impath = line[1][1:]
         impath = impath[:-3]
-
-        mask_path = 'gtFine'+folder+'/'+impath+'_gtFine_color.png'
-        im_path = 'leftImg8bit'+folder+'/'+impath+'leftImg8bit.png'
+        
+        mask_path = 'cityscapes/gtFine'+folder+'/'+impath+'_gtFine_color.png'
+        im_path = 'cityscapes/leftImg8bit'+folder+'/'+impath+'_leftImg8bit.png'
         
         mask = misc.imread(mask_path)
         im = misc.imread(im_path)
@@ -72,7 +73,8 @@ for i in range(227):
         labeled_array,num_features = label(fore_grid,structure=np.ones([3,3]))
         
         total_features = 0
-        new_base = np.copy(base_image)
+        new_base = np.copy(base_im)
+        new_base_mask = np.copy(base_mask)
         width = len(mask)
         height = len(mask[0])
         coordinates = list(product(range(width), range(height)))
@@ -80,6 +82,7 @@ for i in range(227):
         for i in range(1,num_features+1):
             grid = np.where(labeled_array==i,1.0,0.0)
             grid_3d = np.tile(np.reshape(grid,[1024,2048,1]),(1,1,3))
+            grid_4d = np.tile(np.reshape(grid,[1024,2048,1]),(1,1,4))
             c = np.reshape(grid,[len(mask),len(mask[0]),1])*coordinates
             ground_y = np.max(c[:,:,0])
             ground_x1 = np.min(np.where(c[:,:,1]==0,np.inf,c[:,:,1]))
@@ -89,12 +92,18 @@ for i in range(227):
             line_match = np.array(line[:,0]==road_color[0])*np.array(line[:,1]==road_color[1])*np.array(line[:,2]==road_color[2])*np.array(line[:,3]==road_color[3])
             line_match = np.array(line_match,dtype=np.float32)
             
-            if np.mean(line_match) > 0.85:
-                new_base = np.where(grid_3d==1,image,new_base)
+            if len(line_match) > 0 and np.mean(line_match) > 0.85:
+                new_base = np.where(grid_3d==1,im,new_base)
+                new_base_mask = np.where(grid_4d==1,mask,new_base_mask)
                 total_features += 1
                 
         if total_features > 0:
-            misc.imsave('base_pairs/'+str(base_id)+'_'+str(total_copies)+'.png')
-            total_copies += 1
+            if 'train' in folder:
+    #             misc.imsave('base_pairs/train/'+str(base_id)+'_'+str(total_gen)+'.png',new_base)
+                misc.imsave('modal_masks/train/'+str(base_id)+'_'+str(total_gen)+'.png',new_base_mask)
+            else:
+    #             misc.imsave('base_pairs/train/'+str(base_id)+'_'+str(total_gen)+'.png',new_base) 
+                misc.imsave('modal_masks/val/'+str(base_id)+'_'+str(total_gen)+'.png',new_base_mask)
+            total_gen += 1
         
         line = match_file.readline()
