@@ -9,7 +9,7 @@ from itertools import product
 from scipy.ndimage.measurements import label
 
 f = open("amodal/dict_file_bdd.txt","r")
-match_file = open("amodal/match_file_bdd.txt","a")
+match_file = open("amodal/match_file_bdd.txt","w")
 
 person_color = [220,20,60,255]
 rider_color = [255,0,0,255]
@@ -62,7 +62,7 @@ for i in range(271):
     base_terrains.append(match_grid(base_mask,terrain_color))
     base_vegs.append(match_grid(base_mask,veg_color))
     
-for i in range(219,271):
+for i in range(271):
     print(i)
     base_path = base_paths[i]
     base_image = base_images[i]
@@ -102,14 +102,12 @@ for i in range(219,271):
                         match_terrain = np.where(terrain>base_terrain,1.0,-1.0)*terrain
                         match_veg = np.where(veg>base_veg,1.0,-1.0)*veg
                         
-                        if np.sum(ground+park+road+side+terrain+veg) == 0:
+                        if np.sum(ground+park+road+side+terrain+veg) == 0 or np.mean(road) < 0.05:
                             score = np.inf
                         else:
                             score = np.sum(match_ground+match_park+match_road+match_side+match_terrain+match_veg)/np.sum(ground+park+road+side+terrain+veg)
                         match_scores_.append(score)
     order = np.argsort(match_scores_)[:30]
-    print(np.unique(match_scores_))
-    print(order)
     match_file.write(str(i)+"\n")
     for j in order:
         match_file.write(str(paths[j])+"\n")
