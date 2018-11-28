@@ -65,7 +65,7 @@ for i in range(271):
         if 'train' in subfolder:
             im_path = 'bdd100k_seg/bdd100k/seg/images/train/'+pth+'.jpg'
         else:
-            im_path = 'bdd100k_seg/bdd100k/seg/images/val/'+pth+'.jpg
+            im_path = 'bdd100k_seg/bdd100k/seg/images/val/'+pth+'.jpg'
         
         mask = misc.imread(mask_path)
         im = misc.imread(im_path)
