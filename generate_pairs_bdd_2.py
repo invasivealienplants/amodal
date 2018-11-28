@@ -90,7 +90,7 @@ for i in range(271):
         skyscore = False
         if np.sum(skygrid) > 0 and np.sum(basesky) > 0:
             meansky = np.mean(im[skygrid==1],axis=(0,1))
-            meanskybase = np.mean(baseim[basesky==1],axis=(0,1))
+            meanskybase = np.mean(base_im[basesky==1],axis=(0,1))
             skyscore = np.mean((meansky-meanskybase)**2)
             
         if np.mean(roadgrid) < 0.05 or skyscore > 10000 or skyscore == False:
