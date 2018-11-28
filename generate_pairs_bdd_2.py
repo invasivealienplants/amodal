@@ -47,8 +47,9 @@ for i in range(271):
     print(i)
     baseline = dict_file.readline()[:-1]
     baseline = baseline.split(",")
-    base_mask_path = 'bdd100k_seg/bdd100k/seg/color_labels/'+baseline[1]+'_train_color.png'
-    base_im_path = 'bdd100k_seg/bdd100k/seg/images/'+baseline[1]+'.jpg'
+    base_mask_path = 'bdd100k_seg/bdd100k/seg/'+baseline[1]+'_train_color.png'
+    baseline1 = baseline[1].split("color_labels/")[0]
+    base_im_path = 'bdd100k_seg/bdd100k/seg/images/'+baseline1+'.jpg'
     
     base_mask = misc.imread(base_mask_path)
     base_im = misc.imread(base_im_path)
