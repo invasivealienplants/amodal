@@ -83,7 +83,7 @@ for i in range(271):
         roadgrid = match_grid(mask,road_color)
         skygrid = match_grid(mask,sky_color)
         foregrid = np.minimum(pergrid+ridergrid+bikegrid+busgrid+cargrid+carvgrid+motorgrid+trailgrid+traingrid+truckgrid,1.0)
-        labeled_array,num_features = label(fore_grid,structure=np.ones([3,3]))
+        labeled_array,num_features = label(foregrid,structure=np.ones([3,3]))
         
         skygrid = match_grid(mask,sky_color)
         basesky = match_grid(basemask,sky_color)
