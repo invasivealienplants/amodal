@@ -112,10 +112,10 @@ for root,_,mask_paths in os.walk("mapillary/data"):
                 base_masks.append(misc.imread("mapillary/data/validation/labels/"+image_id+".png"))
             base_subfolders.append(subfolder)
             base_image_ids.append(image_id)
-            if len(base_images) % 1000 == 0:
+            if len(base_images) % 500 == 0 and total_count > 0:
                 print("Images passed through : " + str(total_count))
-                base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=750)
-base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=750)
+                base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=400)
+base_images,base_masks,base_subfolders,base_image_ids = get_top_k(base_images,base_masks,base_subfolders,base_image_ids,k=400)
 
 # save images
 for i,(base_image,base_mask,base_subfolder,base_id) in enumerate(zip(base_images,base_masks,base_subfolders,base_image_ids)):
