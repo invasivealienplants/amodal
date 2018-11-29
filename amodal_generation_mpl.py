@@ -101,6 +101,7 @@ base_image_ids = []
 for root,_,mask_paths in os.walk("mapillary/data"):
     if not ("testing" in root) and "images" in root:
         for mask_path in mask_paths:
+            print(total_count)
             total_count += 1
             subfolder = root.split("mapillary/data/")[-1]
             image_id = mask_path.split(".jpg")[0]
