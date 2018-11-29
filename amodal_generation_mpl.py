@@ -106,7 +106,7 @@ for root,_,mask_paths in os.walk("mapillary/data"):
             base_subfolders.append(subfolder)
             base_image_ids.append(image_id)
             base_scores.append(calculate_foreground(image,mask))
-            if len(base_images) % 1500 == 0 and total_count > 0:
+            if len(base_scores) % 1500 == 0 and total_count > 0:
                 print("Images passed through : " + str(total_count))
                 order = np.argsort(base_scores)[:750]
                 new_scores = []
@@ -128,5 +128,5 @@ for idx in order:
 base_scores,base_subfolders,base_image_ids = new_scores,new_sf,new_ids
 
 # save images
-for i,(base_image,base_mask,base_subfolder,base_id) in enumerate(zip(base_images,base_masks,base_subfolders,base_image_ids)):
+for i,(base_subfolder,base_id) in enumerate(zip(base_subfolders,base_image_ids)):
     f.write(str(i)+","+base_subfolder+","+base_id+"\n")
