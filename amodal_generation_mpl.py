@@ -76,7 +76,7 @@ def calculate_foreground(images,masks):
         if np.mean(roadgrid) < 0.05:
             percent_foreground.append(np.inf)
         else:
-            percent_foreground.append(np.mean(foreground))
+            percent_foreground.append(np.mean(foregrid))
     return percent_foreground
   
 def get_top_k(images,masks,subfolders,image_ids,k=250):
