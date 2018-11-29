@@ -79,17 +79,19 @@ def calculate_foreground(images,masks):
             percent_foreground.append(np.mean(foreground))
     return percent_foreground
   
-def get_top_k(images,masks,image_ids,k=500):
+def get_top_k(images,masks,subfolders,image_ids,k=250):
     percent_foreground = calculate_foreground(images,masks)
     order = np.argsort(percent_foreground)[:k]
     i_ = []
     m_ = []
+    s_ = []
     id_ = []
     for idx in order:
         i_.append(images[idx])
         m_.append(masks[idx])
+        s_.append(subfolders[idx])
         id_.append(image_ids[idx])
-    return i_,m_,id_
+    return i_,m_,s_,id_
 
 total_count = 0
 base_images = []
