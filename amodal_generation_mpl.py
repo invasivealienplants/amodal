@@ -70,7 +70,7 @@ def calculate_foreground(images,masks):
         cwalkpgrid = match_grid(mask,cwalkp_color)
         roadgrid = match_grid(mask,road_color)
         
-        foregrid = np.minimum(1.0,trailgrid+ganimalgrid+busgrid+bikegrid+vehiclegrid+ridergrid+motorgrid+motorcgrid+pergrid+egogrid+cargrid+bicygrid+carvgrid+truckgrid+whslowgrid)
+        foregrid = np.minimum(1.0,trailgrid+ganimalgrid+busgrid+bikegrid+vehicgrid+ridergrid+motorgrid+motorcgrid+pergrid+egogrid+cargrid+bicygrid+carvgrid+truckgrid+whslowgrid)
         roadgrid = np.minimum(1.0,manholegrid+lanemarkgrid+crosswalkgrid+cwalkpgrid+roadgrid)
         
         if np.mean(roadgrid) < 0.05:
