@@ -98,7 +98,7 @@ base_images = []
 base_masks = []
 base_subfolders = []
 base_image_ids = []
-for root,_,mask_paths in os.walk("data"):
+for root,_,mask_paths in os.walk("mapillary/data"):
     if not ("testing" in root) and "images" in root:
         for mask_path in mask_paths:
             total_count += 1
