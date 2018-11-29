@@ -102,13 +102,13 @@ for root,_,mask_paths in os.walk("mapillary/data"):
     if not ("testing" in root) and "images" in root:
         for mask_path in mask_paths:
             total_count += 1
-            subfolder = root.split("data/")[-1]
+            subfolder = root.split("mapillary/data/")[-1]
             image_id = mask_path.split(".jpg")[0]
             base_images.append(misc.imread(root+"/"+mask_path))
             if "training" in subfolder:
-                base_masks.append(misc.imread("data/training/labels/"+image_id+".png"))
+                base_masks.append(misc.imread("mapillary/data/training/labels/"+image_id+".png"))
             else:
-                base_masks.append(misc.imread("data/validation/labels/"+image_id+".png"))
+                base_masks.append(misc.imread("mapillary/data/validation/labels/"+image_id+".png"))
             base_subfolders.append(subfolder)
             base_image_ids.append(image_id)
             if len(base_images) % 1500 == 0:
