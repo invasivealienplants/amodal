@@ -72,6 +72,29 @@ for i in range(227):
     base_vegs.append(match_grid(base_mask,veg_color))
     base_terrains.append(match_grid(base_mask,terrain_color))
     
+stats_file = open("foreground_road_scores.txt","r")
+foreground_scores = []
+road_scores = []
+im_paths = []
+
+for line in stats_file:
+    line = line[:-1].split(",")
+    foreground_scores.append(float(line[0]))
+    road_scores.append(float(line[1]))
+    im_paths.append(line[2])
+
+bucket1 = []
+bucket2 = []
+bucket3 = []
+
+for score,pth in zip(foreground_scores,im_paths):
+    if score > 0.07:
+        bucket1.append(pth)
+    elif score > 0.04:
+        bucket2.append(pth)
+    else:
+        bucket3.append(pth)
+    
 for i in range(227):
     print(i)
     
@@ -84,41 +107,101 @@ for i in range(227):
     base_terrain = base_terrains[i]
     base_path = base_paths[i]
     
-    match_scores_ = []
-    paths = []
+    bucket1_match_scores = []
+    bucket2_match_scores = []
+    bucket3_match_scores = []
+    bucket1_paths = []
+    bucket2_paths = []
+    bucket3_paths = []
     
-    for root,_,mask_paths in os.walk("cityscapes/gtFine"):
-        if not ("/test" in root):
-            for mask_path in mask_paths:
-                if mask_path[-9:] == "color.png":
-                    if (("val" in base_path and "val" in root) or ("train" in base_path and "train" in root)):
-                        subfolder = root[17:]
-                        image_id = mask_path[:-17]
-                        mask = misc.imread("cityscapes/gtFine/" + subfolder + "/" + image_id+"_gtFine_color.png")
-                        paths.append((subfolder,image_id))
+    for mask_path in bucket1:
+        if ("val" in base_path and "val" in mask_path) or ("train" in base_path and "train" in root):
+            mask = misc.imread(mask_path)
+            mask_path = mask_path[:-17].split("/")
+            image_id = mask_path[2]+"/"+mask_path[3]+"/"mask_path[4]
+            
+            road = match_grid(mask,road_color)
+            ground = match_grid(mask,ground_color)
+            side = match_grid(mask,side_color)
+            veg = match_grid(mask,veg_color)
+            terrain = match_grid(mask,terrain_color)
 
-                        road = match_grid(mask,road_color)
-                        ground = match_grid(mask,ground_color)
-                        side = match_grid(mask,side_color)
-                        veg = match_grid(mask,veg_color)
-                        terrain = match_grid(mask,terrain_color)
+            match_road = np.where(road>base_road,1.0,-1.0)*road
+            match_side = np.where(side>base_side,1.0,-1.0)*side
+            match_ground = np.where(ground>base_ground,1.0,-1.0)*ground
+            match_veg = np.where(veg>base_veg,1.0,-1.0)*veg
+            match_terrain = np.where(terrain>base_terrain,1.0,-1.0)*terrain
+            
+            if np.sum(road+side+ground+veg+terrain) == 0:
+                score = np.inf
+            else:
+                score = np.sum(match_road+match_side+match_ground+match_veg+match_terrain)/np.sum(road+side+ground+veg+terrain)
+            
+            bucket1_paths.append(image_id)
+            bucket1_match_scores.append(score)
+            
+    for mask_path in bucket2:
+        if ("val" in base_path and "val" in mask_path) or ("train" in base_path and "train" in root):
+            mask = misc.imread(mask_path)
+            mask_path = mask_path[:-17].split("/")
+            image_id = mask_path[2]+"/"+mask_path[3]+"/"mask_path[4]
+            
+            road = match_grid(mask,road_color)
+            ground = match_grid(mask,ground_color)
+            side = match_grid(mask,side_color)
+            veg = match_grid(mask,veg_color)
+            terrain = match_grid(mask,terrain_color)
 
-                        match_road = np.where(road>base_road,1.0,-1.0)*road
-                        match_side = np.where(side>base_side,1.0,-1.0)*side
-                        match_ground = np.where(ground>base_ground,1.0,-1.0)*ground
-                        match_veg = np.where(veg>base_veg,1.0,-1.0)*veg
-                        match_terrain = np.where(terrain>base_terrain,1.0,-1.0)*terrain
-                        
-                        if np.sum(road+side+ground+veg+terrain) == 0:
-                            score = np.inf
-                        else:
-                            score = np.sum(match_road+match_side+match_ground+match_veg+match_terrain)/np.sum(road+side+ground+veg+terrain)
-                        match_scores_.append(score)
+            match_road = np.where(road>base_road,1.0,-1.0)*road
+            match_side = np.where(side>base_side,1.0,-1.0)*side
+            match_ground = np.where(ground>base_ground,1.0,-1.0)*ground
+            match_veg = np.where(veg>base_veg,1.0,-1.0)*veg
+            match_terrain = np.where(terrain>base_terrain,1.0,-1.0)*terrain
+            
+            if np.sum(road+side+ground+veg+terrain) == 0:
+                score = np.inf
+            else:
+                score = np.sum(match_road+match_side+match_ground+match_veg+match_terrain)/np.sum(road+side+ground+veg+terrain)
+            
+            bucket2_paths.append(image_id)
+            bucket2_match_scores.append(score)
+            
+    for mask_path in bucket3:
+        if ("val" in base_path and "val" in mask_path) or ("train" in base_path and "train" in root):
+            mask = misc.imread(mask_path)
+            mask_path = mask_path[:-17].split("/")
+            image_id = mask_path[2]+"/"+mask_path[3]+"/"mask_path[4]
+            
+            road = match_grid(mask,road_color)
+            ground = match_grid(mask,ground_color)
+            side = match_grid(mask,side_color)
+            veg = match_grid(mask,veg_color)
+            terrain = match_grid(mask,terrain_color)
+
+            match_road = np.where(road>base_road,1.0,-1.0)*road
+            match_side = np.where(side>base_side,1.0,-1.0)*side
+            match_ground = np.where(ground>base_ground,1.0,-1.0)*ground
+            match_veg = np.where(veg>base_veg,1.0,-1.0)*veg
+            match_terrain = np.where(terrain>base_terrain,1.0,-1.0)*terrain
+            
+            if np.sum(road+side+ground+veg+terrain) == 0:
+                score = np.inf
+            else:
+                score = np.sum(match_road+match_side+match_ground+match_veg+match_terrain)/np.sum(road+side+ground+veg+terrain)
+            
+            bucket3_paths.append(image_id)
+            bucket3_match_scores.append(score)
+    
+    bucket1_order = np.argsort(bucket1_match_scores)[:8]
+    bucket2_order = np.argsort(bucket2_match_scores)[:17]
+    bucket3_order = np.argsort(bucket3_match_scores)[:5]
                     
-    order = np.argsort(match_scores_)[:20]
-    print(match_scores_)
-    print(order)
     match_file.write(str(i)+"\n")
-    for j in order:
-        match_file.write(str(paths[j])+"\n")
+    for j in bucket1_order:
+        match_file.write(str(bucket1_paths[j])+"\n")
+    for j in bucket2_order:
+        match_file.write(str(bucket2_paths[j])+"\n")
+    for j in bucket3_order:
+        match_file.write(str(bucket3_paths[j])+"\n")
+    
     match_file.write("\n")
