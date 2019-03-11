@@ -88,7 +88,7 @@ bucket2 = []
 bucket3 = []
 
 for score,pth in zip(foreground_scores,im_paths):
-    if score > 0.07:
+    if score > 0.065:
         bucket1.append(pth)
     elif score > 0.04:
         bucket2.append(pth)
