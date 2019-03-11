@@ -9,7 +9,7 @@ from itertools import product
 from scipy.ndimage.measurements import label
 
 f = open("dict_file.txt","r")
-match_file = open("/home/pp456/match_file_v2.txt","w")
+match_file = open("/home/pp456/match_file_v3.txt","w")
 
 car_color = [0,0,142,255]
 person_color = [255,0,0,255]
@@ -141,6 +141,7 @@ for i in range(227):
             bucket1_match_scores.append(score)
             
     for mask_path in bucket2:
+        break # LMAO
         if ("val" in base_path and "val" in mask_path) or ("train" in base_path and "train" in root):
             mask = misc.imread(mask_path)
             mask_path = mask_path[:-17].split("/")
@@ -167,6 +168,7 @@ for i in range(227):
             bucket2_match_scores.append(score)
             
     for mask_path in bucket3:
+        break # LMAO
         if ("val" in base_path and "val" in mask_path) or ("train" in base_path and "train" in root):
             mask = misc.imread(mask_path)
             mask_path = mask_path[:-17].split("/")
@@ -192,16 +194,16 @@ for i in range(227):
             bucket3_paths.append(image_id)
             bucket3_match_scores.append(score)
     
-    bucket1_order = np.argsort(bucket1_match_scores)[:8]
-    bucket2_order = np.argsort(bucket2_match_scores)[:17]
-    bucket3_order = np.argsort(bucket3_match_scores)[:5]
+    bucket1_order = np.argsort(bucket1_match_scores)[:20]
+#     bucket2_order = np.argsort(bucket2_match_scores)[:17]
+#     bucket3_order = np.argsort(bucket3_match_scores)[:5]
                     
     match_file.write(str(i)+"\n")
     for j in bucket1_order:
         match_file.write(str(bucket1_paths[j])+"\n")
-    for j in bucket2_order:
-        match_file.write(str(bucket2_paths[j])+"\n")
-    for j in bucket3_order:
-        match_file.write(str(bucket3_paths[j])+"\n")
+#     for j in bucket2_order:
+#         match_file.write(str(bucket2_paths[j])+"\n")
+#     for j in bucket3_order:
+#         match_file.write(str(bucket3_paths[j])+"\n")
     
     match_file.write("\n")
