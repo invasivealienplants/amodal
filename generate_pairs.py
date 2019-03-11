@@ -118,7 +118,7 @@ for i in range(227):
         if ("val" in base_path and "val" in mask_path) or ("train" in base_path and "train" in root):
             mask = misc.imread(mask_path)
             mask_path = mask_path[:-17].split("/")
-            image_id = mask_path[2]+"/"+mask_path[3]+"/"mask_path[4]
+            image_id = mask_path[2]+"/"+mask_path[3]+"/"+mask_path[4]
             
             road = match_grid(mask,road_color)
             ground = match_grid(mask,ground_color)
@@ -145,7 +145,7 @@ for i in range(227):
         if ("val" in base_path and "val" in mask_path) or ("train" in base_path and "train" in root):
             mask = misc.imread(mask_path)
             mask_path = mask_path[:-17].split("/")
-            image_id = mask_path[2]+"/"+mask_path[3]+"/"mask_path[4]
+            image_id = mask_path[2]+"/"+mask_path[3]+"/"+mask_path[4]
             
             road = match_grid(mask,road_color)
             ground = match_grid(mask,ground_color)
@@ -172,7 +172,7 @@ for i in range(227):
         if ("val" in base_path and "val" in mask_path) or ("train" in base_path and "train" in root):
             mask = misc.imread(mask_path)
             mask_path = mask_path[:-17].split("/")
-            image_id = mask_path[2]+"/"+mask_path[3]+"/"mask_path[4]
+            image_id = mask_path[2]+"/"+mask_path[3]+"/"+mask_path[4]
             
             road = match_grid(mask,road_color)
             ground = match_grid(mask,ground_color)
