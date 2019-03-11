@@ -72,7 +72,7 @@ for i in range(227):
     base_vegs.append(match_grid(base_mask,veg_color))
     base_terrains.append(match_grid(base_mask,terrain_color))
     
-stats_file = open("foreground_road_scores.txt","r")
+stats_file = open("amodal/foreground_road_scores.txt","r")
 foreground_scores = []
 road_scores = []
 im_paths = []
